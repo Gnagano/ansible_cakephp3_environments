@@ -1,78 +1,79 @@
-# Ansible Role: create new cakephp3 application
+# Ansible Role: set up for cakephp-environments
 
-Use this role when you create new cakephp3.
+## Overviews
+
+This ansible roles allow you to install and setting [josegonzalez/cakephp-environments](https://github.com/josegonzalez/cakephp-environments)
+You can change environment such like `develop`,`test`,`production`,`jenkins` in default settings.
 
 ## Requirements
 
 - OS: Ubuntu16.04
-- php version is higher than 7.0
-- The database for the new cakephp3 app is set
+- The database for the cakephp3 app is set
 
 ## Setup
+
+Install the ansible roll from galaxy or git clone it.
 
 ```
 $ ansible_galaxy install gano2018.ansible_cakephp3 --roles-path <your_roles_directory>
 ```
 
-## Usage
+And then, copy `defaults/main.yml.default` as `defaults.yml` and edit the role variables.
+About role variables, please checkt the next paragraph.
 
-Copy `defaults/main.yml.default` as `defaults/main.yml` and edit `main.yml`. The roles variables on main.yml are depends on you. Please read the next section `Role Varibles` below.
-After editing main.yml, just execute main.yml
+## Role variables
 
-## Role Variables
+#### cakephp3_project_name:
 
-#### php_version
+Please set the your project directory name for cakephp3.
 
-  Set '7.0' if you use php version higher than 7.0, even though you use php7.1 or php7.2 and higher.
+#### cakephp3_app_dir:
 
-#### cakephp3_project_name
+This variable is the directory which has your cakephp3 project.
+If your cakephp3 project name is `test` and the direcoty is in `/var/www/html/test`, so the variable is `/var/www/html`
 
-  The name of what you want to create app
+#### cakephp3_project_dir:
 
-#### cakephp3_app_dir
+Do not edit, and this variable are `{{ cakephp3_project_dir }}/{{ cakephp3_project_dir }}`,
 
-  The directory where your new app is installed.
+#### cakephp3_envs:
 
-#### cakephp3_required_packages
+Please set the environments you need.
+The default values are `[ 'development', 'test', 'jenkins' ]`
 
-  The packages required to install cakephp3 app.
+For example, add `production`  or `staging` if you need.
 
-#### cakephp3_webserver_app
+#### development_db_driver
+#### development_db_host
+#### development_db_username
+#### development_db_password
+#### development_db_name
 
-  The name of web server application you will use on server.
-  If using nginx, make the value 'nginx'. If apache, value is 'apache'.
+`development` is the name of environment and please set db driver, db host, username, password and db name.
+This variable is used in `template/development.php.j2` and will be copied to `/config/bootstrap/environments/development.php`
 
-#### cakephp3_nginx_conf_file
+When you edit `test_db_driver`, you will see the same situation.
+The variable is used in `template/test.php.j2` and will got to `/config/bootstrap/environments/test.php`
 
-  The file path for nginx conf file.
-  The default value is `/etc/nginx/sites-enabled/default`
+In the default setting, there are three environments, development, test and jenkins. So you need to edit database inforimation for three environments.
 
-#### cakephp3_nginx_service_port
+#### development_test_db_driver
+#### development_test_db_host
+#### development_test_db_username
+#### development_test_db_password
+#### development_test_db_name
 
-  The service port for nginx.
-  The default value is `80`
+Those are the same as previous variables, the difference are that this variables are describing about database for test.
+Set the variables in the same way.
 
 #### cakephp3_email_host
 #### cakephp3_email_port
 #### cakephp3_email_address
 #### cakephp3_email_password
 
-  Those valiables are for email settings.
-  As the name of variable, they will be set hostname, port, address, password.
+Those valiables are for email settings.
+As the name of variable, they will be set hostname, port, address, password.
 
-#### cakephp3_db_default_driver
-#### cakephp3_db_default_host
-#### cakephp3cakephp3_db_default_username
-#### cakephp3cakephp3_db_default_password
-#### cakephp3cakephp3_db_default_database
+## Usage
 
-  Those valiables are for database settings written on `config/app.php`
-  As the name of variable, they will be set driver name, host, username, password and database name. The default value of `cakephp3_db_default_driver` is `Cake\Database\Driver\MySql`
-
-#### cakephp3_db_test_default_driver
-#### cakephp3_db_test_default_host
-#### cakephp3cakephp3_db_test_default_username
-#### cakephp3cakephp3_db_test_default_password
-#### cakephp3cakephp3_db_test_default_database
-
-  Those variables are for test database.
+After setting role varibles, just execute ansible role.
