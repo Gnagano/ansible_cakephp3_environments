@@ -1,0 +1,11 @@
+---
+- name: composer_install / edit composer.json
+  lineinfile:
+    dest: "{{ cakephp3_project_dir }}/composer.json"
+    insertafter: "\"cakephp/cakephp\""
+    line: "\t\t\t\t\"josegonzalez/cakephp-environments\": \"3.0.0\","
+
+- name: composer_install / composer update
+  shell: 'composer update'
+  args:
+    chdir: "{{ cakephp3_project_dir }}"

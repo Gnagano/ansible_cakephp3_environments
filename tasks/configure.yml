@@ -1,0 +1,16 @@
+---
+- name: configure / create environments directory
+  file:
+    path: "{{ cakephp3_project_dir }}/config/bootstrap/environments"
+    state: directory
+
+- name: configure / create environments.php
+  template:
+    src: environments.php.j2
+    dest: "{{ cakephp3_project_dir }}/config/bootstrap/environments.php"
+
+- name: configure / create file for each environments
+  template:
+    src: "{{ item }}.php.j2"
+    dest: "{{ cakephp3_project_dir }}/config/bootstrap/environments/{{ item }}.php"
+  with_items: "{{ cakephp3_envs }}"
