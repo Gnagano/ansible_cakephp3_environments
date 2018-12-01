@@ -1,7 +1,7 @@
 ---
 galaxy_info:
   author: gano
-  description: create cakephp3 new project
+  description: cakephp_enviroments settings
   license: MIT
   min_ansible_version: 2.7
   platforms:
@@ -11,4 +11,4 @@ galaxy_info:
   galaxy_tags:
     - ubuntu
     - cakephp3
-    - nginx
+    
