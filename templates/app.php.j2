@@ -70,7 +70,7 @@ return [
      *   You should treat it as extremely sensitive data.
      */
     'Security' => [
-        'salt' => env('SECURITY_SALT', '824ce0286414453bbe6b0ebb0309a9af29909aa564dd32dd099b5bb55f2eabca'),
+        'salt' => env('SECURITY_SALT', '{{ cakephp3_security_salt }}'),
     ],
 
     /**
