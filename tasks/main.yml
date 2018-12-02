@@ -17,5 +17,5 @@
 
 - include: edit_app.yml tags=cakephp3
 
-- include: test_env_access_nginx.yml tags=cakephp3
+- include: env_access_nginx.yml tags=cakephp3
   when: cakephp3_webserver_app == 'nginx'
