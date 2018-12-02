@@ -4,6 +4,16 @@ cakephp3_project_name: 'your_project_name'
 cakephp3_app_dir: '/home/doc_root'
 cakephp3_project_dir: "{{ cakephp3_app_dir }}/{{ cakephp3_project_name }}"
 
+#nginx
+cakephp3_webserver_app:      'nginx'
+cakephp3_nginx_conf_dir:     '/etc/nginx/sites-enabled'
+cakephp3_nginx_default_env:  'development'
+cakephp3_test_env_name:      'test'
+cakephp3_nginx_server_name:  'your_server_name'
+
+#app.php security.salt
+cakephp3_security_salt: 'your_security_salt'
+
 #envornments
 cakephp3_envs:
   - development
