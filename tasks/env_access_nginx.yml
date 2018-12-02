@@ -1,0 +1,83 @@
+---
+# write CAKE_ENV on default
+# - name: test_env_access_nginx / edit CAKE_ENV on default
+#   lineinfile:
+#     dest: "{{ cakephp3_nginx_conf_dir }}/default"
+#     insertafter: "fastcgi_param PATH_TRANSLATED"
+#     line: "\tfastcgi_param CAKE_ENV {{ cakephp3_default_env_name }};"
+
+
+# default env
+## copy conf
+- name: env_access_nginx / copy default to default env
+  copy:
+    src: "{{ cakephp3_nginx_conf_dir }}/default"
+    dest: "{{ cakephp3_nginx_conf_dir }}/{{ cakephp3_default_env_name }}"
+
+## server name
+- name: env_access_nginx / edit server_name
+  lineinfile:
+    path: "{{ cakephp3_nginx_conf_dir }}/{{ cakephp3_default_env_name }}"
+    regexp: "server_name\ localhost;"
+    line: "\ \ \ \ server_name {{ cakephp3_nginx_server_name }};"
+    state: present
+
+## CAKE_ENV
+- name: env_access_nginx / edit CAKE_ENV on default
+  lineinfile:
+    dest: "{{ cakephp3_nginx_conf_dir }}/{{ cakephp3_default_env_name }}"
+    insertafter: "fastcgi_param PATH_TRANSLATED"
+    line: "\tfastcgi_param CAKE_ENV {{ cakephp3_default_env_name }};"
+
+## hosts
+- name: env_access_nginx / add routing to hosts
+  lineinfile:
+    path: "/etc/hosts"
+    insertafter: "127.0.0.1(.+)localhost"
+    line: "127.0.0.1       {{ cakephp3_nginx_server_name }}"
+
+
+# env for test
+## copy conf
+- name: env_access_nginx / copy default to env for test
+  copy:
+    src: "{{ cakephp3_nginx_conf_dir }}/default"
+    dest: "{{ cakephp3_nginx_conf_dir }}/{{ cakephp3_test_env_name }}"
+
+## sever name
+- name: env_access_nginx / edit server_name
+  lineinfile:
+    path: "{{ cakephp3_nginx_conf_dir }}/{{ cakephp3_test_env_name }}"
+    regexp: "server_name\ localhost;"
+    line: "\ \ \ \ server_name {{ cakephp3_test_env_name }}.{{ cakephp3_nginx_server_name }};"
+    state: present
+
+## CAKE_ENV
+- name: env_access_nginx / edit CAKE_ENV on test_env
+  lineinfile:
+    path: "{{ cakephp3_nginx_conf_dir }}/{{ cakephp3_test_env_name }}"
+    regexp: "fastcgi_param CAKE_ENV development"
+    line: "\tfastcgi_param CAKE_ENV {{ cakephp3_test_env_name }};"
+    state: present
+
+## hosts
+- name: env_access_nginx / add routing to hosts
+  lineinfile:
+    path: "/etc/hosts"
+    insertafter: "127.0.0.1(.+)localhost"
+    line: "127.0.0.1       {{ cakephp3_test_env_name }}.{{ cakephp3_nginx_server_name }}"
+
+
+# restart nginx
+- name: env_access_nginx / nginx restart
+  systemd:
+    name: nginx
+    state: reloaded
+    enabled: yes
+
+- name: env_access_nginx / wait for nginx restart
+  wait_for:
+    host: "{{ ansible_eth1.ipv4.address }}"
+    port:  "{{ cakephp3_nginx_service_port }}"
+    delay: 3
+    timeout: 60
