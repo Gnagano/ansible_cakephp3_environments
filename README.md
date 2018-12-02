@@ -21,7 +21,7 @@ $ ansible_galaxy install gano2018.ansible_cakephp3 --roles-path <your_roles_dire
 And then, copy `defaults/main.yml.default` as `defaults.yml` and edit the role variables.
 About role variables, please checkt the next paragraph.
 
-## Role variables
+## Role variables you need to edit
 
 #### cakephp3_project_name:
 
@@ -32,9 +32,30 @@ Please set the your project directory name for cakephp3.
 This variable is the directory which has your cakephp3 project.
 If your cakephp3 project name is `test` and the direcoty is in `/var/www/html/test`, so the variable is `/var/www/html`
 
-#### cakephp3_project_dir:
+#### cakephp3_webserver_app:
 
-Do not edit, and this variable are `{{ cakephp3_project_dir }}/{{ cakephp3_project_dir }}`,
+Set `nginx` if you use `nginx` ,otherwise specify your web server such as `apache`.
+
+#### cakephp3_nginx_conf_dir:
+
+The directory where config file for nginx. The default value is `/etc/nginx/sites-enabled`.
+
+#### cakephp3_nginx_default_env:
+
+Specify the name of environment you use in defulat. The default value is `development`.
+
+#### cakephp3_test_name:
+
+Specify the name of environment you use for test. The default value is `test`.
+
+#### cakephp3_nginx_server_name:
+
+Specify the name of access to the server such as domain name.
+If you set `test.localhost`, you can access the server test.localhost end environment variable `CAKE_ENV` will be `cakephp3_test_name` when the app works.
+
+### cakephp3_security_salt:
+
+Plese set your app's security_salt which will be added in app.php
 
 #### cakephp3_envs:
 
