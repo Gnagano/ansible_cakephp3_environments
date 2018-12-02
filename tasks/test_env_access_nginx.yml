@@ -1,0 +1,48 @@
+---
+# write CAKE_ENV on default
+- name: test_env_access_nginx / edit CAKE_ENV on default
+  lineinfile:
+    dest: "{{ cakephp3_nginx_conf_dir }}/default"
+    insertafter: "fastcgi_param PATH_TRANSLATED"
+    line: "\tfastcgi_param CAKE_ENV {{ cakephp3_nginx_default_env }};"
+
+# copy default to env if env is not development
+- copy:
+    src: "{{ cakephp3_nginx_conf_dir }}/default"
+    dest: "{{ cakephp3_nginx_conf_dir }}/{{ cakephp3_test_env_name }}"
+
+# change severname
+- name: test_env_access_nginx / edit server_name
+  lineinfile:
+    path: "{{ cakephp3_nginx_conf_dir }}/{{ cakephp3_test_env_name }}"
+    regexp: "server_name\ localhost;"
+    line: "\ \ \ \ server_name {{ cakephp3_test_env_name }}.{{ cakephp3_nginx_server_name }};"
+    state: present
+
+# change CAKE_ENV
+- name: test_env_access_nginx / edit CAKE_ENV on test_env
+  lineinfile:
+    path: "{{ cakephp3_nginx_conf_dir }}/{{ cakephp3_test_env_name }}"
+    regexp: "fastcgi_param CAKE_ENV development"
+    line: "\tfastcgi_param CAKE_ENV {{ cakephp3_test_env_name }};"
+    state: present
+
+# restart nginx handlerにする?
+- name: test_env_access_nginx / nginx restart
+  systemd:
+    name: nginx
+    state: reloaded
+    enabled: yes
+
+- name: test_env_access_nginx / wait for nginx restart
+  wait_for:
+    host: "{{ ansible_eth1.ipv4.address }}"
+    port:  "{{ cakephp3_nginx_service_port }}"
+    delay: 3
+    timeout: 60
+
+- name: test_env_access_nginx / add routing to hosts
+  lineinfile:
+    path: "/etc/hosts"
+    insertafter: "127.0.0.1(.+)localhost"
+    line: "127.0.0.1       {{ cakephp3_test_env_name }}.{{ cakephp3_nginx_server_name }}"
