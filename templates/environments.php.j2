@@ -12,7 +12,7 @@ switch ($env){
   default:
     include dirname(__FILE__) . DS . 'environments' . DS . 'test.php';
     include dirname(__FILE__) . DS . 'environments' . DS . 'development.php';
-    include dirname(__FILE__) . DS . 'environments' . DS . 'ci.php';
+    include dirname(__FILE__) . DS . 'environments' . DS . 'jenkins.php';
     break;
 
 }
