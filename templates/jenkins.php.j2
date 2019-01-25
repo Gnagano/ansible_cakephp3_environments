@@ -3,16 +3,17 @@
 Josegonzalez\Environments\Environment::configure('jenkins', true, [
 
   //MySQL
-  'DB_DRIVER'        => '{{ jenkins_db_driver   }}',
-  'DB_HOST'          => '{{ jenkins_db_host     }}',
-  'DB_USERNAME'      => '{{ jenkins_db_username }}',
-  'DB_PASSWORD'      => '{{ jenkins_db_password }}',
-  'DB_NAME'       => '{{ jenkins_db_name     }}',
+  'DB_DRIVER'       => '{{ jenkins_db_driver      }}',
+  'DB_HOST'         => '{{ jenkins_db_host        }}',
+  'DB_USERNAME'     => '{{ jenkins_db_username    }}',
+  'DB_PASSWORD'     => '{{ jenkins_db_password    }}',
+  'DB_NAME'         => '{{ jenkins_db_name        }}',
+  'DB_UNIX_SOCKET'  => '{{ jenkins_db_unix_socket }}',
 
-  'TEST_DB_DRIVER'   => '{{ jenkins_test_db_driver   }}',
-  'TEST_DB_HOST'     => '{{ jenkins_test_db_host     }}',
-  'TEST_DB_USERNAME' => '{{ jenkins_test_db_username }}',
-  'TEST_DB_PASSWORD' => '{{ jenkins_test_db_password }}',
-  'TEST_DB_NAME'     => '{{ jenkins_test_db_name     }}',
-
+  'TEST_DB_DRIVER'      => '{{ jenkins_test_db_driver       }}',
+  'TEST_DB_HOST'        => '{{ jenkins_test_db_host         }}',
+  'TEST_DB_USERNAME'    => '{{ jenkins_test_db_username     }}',
+  'TEST_DB_PASSWORD'    => '{{ jenkins_test_db_password     }}',
+  'TEST_DB_NAME'        => '{{ jenkins_test_db_name         }}',
+  'TEST_DB_UNIX_SOCKET' => '{{ jenkins_test_db_unix_socket  }}',
 ]);

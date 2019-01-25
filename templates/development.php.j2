@@ -3,16 +3,17 @@
 Josegonzalez\Environments\Environment::configure('development', true, [
 
   //Database
-  'DB_DRIVER'        => '{{ development_db_driver   }}',
-  'DB_HOST'          => '{{ development_db_host     }}',
-  'DB_USERNAME'      => '{{ development_db_username }}',
-  'DB_PASSWORD'      => '{{ development_db_password }}',
-  'DB_NAME'          => '{{ development_db_name     }}',
+  'DB_DRIVER'        => '{{ development_db_driver      }}',
+  'DB_HOST'          => '{{ development_db_host        }}',
+  'DB_USERNAME'      => '{{ development_db_username    }}',
+  'DB_PASSWORD'      => '{{ development_db_password    }}',
+  'DB_NAME'          => '{{ development_db_name        }}',
+  'DB_UNIX_SOCKET'   => '{{ development_db_unix_socket }}',
 
-  'TEST_DB_DRIVER'   => '{{ development_test_db_driver   }}',
-  'TEST_DB_HOST'     => '{{ development_test_db_host     }}',
-  'TEST_DB_USERNAME' => '{{ development_test_db_username }}',
-  'TEST_DB_PASSWORD' => '{{ development_test_db_password }}',
-  'TEST_DB_NAME'     => '{{ development_test_db_name     }}',
-
+  'TEST_DB_DRIVER'      => '{{ development_test_db_driver      }}',
+  'TEST_DB_HOST'        => '{{ development_test_db_host        }}',
+  'TEST_DB_USERNAME'    => '{{ development_test_db_username    }}',
+  'TEST_DB_PASSWORD'    => '{{ development_test_db_password    }}',
+  'TEST_DB_NAME'        => '{{ development_test_db_name        }}',
+  'TEST_DB_UNIX_SOCKET' => '{{ development_test_db_unix_socket }}',
 ]);
